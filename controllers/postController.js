@@ -1,7 +1,8 @@
 const Post = require('../models/postModel');
 
 exports.listPublic = async (req, res) => {
-  const posts = await Post.getAll();
+  // Modified to limit to 6 posts
+  const posts = await Post.getLatest(6);
   res.json({ success: true, posts });
 };
 
