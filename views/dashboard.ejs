@@ -60,7 +60,14 @@
             div.className = 'signal-card';
             
             if (post.type === 'html') {
-              div.innerHTML = post.content;
+              let content = post.content;
+              // Check if content contains BUY or SELL to apply appropriate styling
+              if (content.includes('BUY')) {
+                content = content.replace('trade-action', 'trade-action buy');
+              } else if (content.includes('SELL')) {
+                content = content.replace('trade-action', 'trade-action sell');
+              }
+              div.innerHTML = content;
             } else if (post.type === 'image') {
               div.innerHTML = `<img src="${post.content}" alt="Signal" class="signal-image">`;
             }

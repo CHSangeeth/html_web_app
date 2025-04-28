@@ -720,3 +720,54 @@ footer {
     padding: 1rem;
   }
 }
+
+/* Updated CSS for trade-action styles */
+.trade-action.buy {
+  background-color: var(--primary);
+  color: white;
+}
+
+.trade-action.sell {
+  background-color: var(--danger);
+  color: white;
+}
+
+/* These are existing styles in your CSS, just ensure they are properly set */
+.signals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 1.5rem;
+}
+
+/* Make sure trade cards take full height in grid cells */
+.signal-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
+  display: flex;
+}
+
+.signal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Update the trade card to take full width and height */
+.trade-card {
+  width: 100%;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

@@ -42,6 +42,15 @@
           </div>
           
           <div class="form-group">
+            <label for="signalTemplate">Signal Template:</label>
+            <select id="signalTemplate" onchange="fillTemplate()">
+              <option value="">-- Select Template --</option>
+              <option value="buy">Buy Signal</option>
+              <option value="sell">Sell Signal</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
             <label for="postContent">Content:</label>
             <textarea name="content" id="postContent" placeholder="HTML Content or Image URL" required></textarea>
           </div>
@@ -119,6 +128,37 @@
         }
       });
     };
+
+    // Fill template based on selection
+    function fillTemplate() {
+      const template = document.getElementById('signalTemplate').value;
+      const contentArea = document.getElementById('postContent');
+      const postType = document.getElementById('postType');
+      
+      // Only fill if HTML type is selected
+      if (postType.value !== 'html') {
+        postType.value = 'html';
+      }
+      
+      if (template === 'buy') {
+        contentArea.value = `<div class="trade-card">
+  <div class="trade-pair">EURUSD</div>
+  <div class="trade-action">BUY</div>
+  <div class="target-price">Target Price: *****</div>
+  <div class="target-hit">Profit Target Hit</div>
+  <div class="trade-profit">Profit: $5</div>
+</div>`;
+      } else if (template === 'sell') {
+        contentArea.value = `<div class="trade-card">
+  <div class="trade-pair">EURUSD</div>
+  <div class="trade-action">SELL</div>
+  <div class="target-price">Target Price: *****</div>
+  <div class="target-hit">Profit Target Hit</div>
+  <div class="trade-profit">Profit: $5</div>
+</div>`;
+      }
+    }
+    window.fillTemplate = fillTemplate;
 
     // Edit post
     function editPost(id, type, content) {
