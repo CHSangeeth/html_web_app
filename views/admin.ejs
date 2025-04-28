@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel | Forex App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Panel</h2>
+    <a href="/api/auth/logout">Logout</a>
+    <div>
+      <h3>Create New Post</h3>
+      <form id="createPostForm">
+        <select name="type" required>
+          <option value="html">HTML</option>
+          <option value="image">Image URL</option>
+        </select>
+        <textarea name="content" placeholder="Content or Image URL" required></textarea>
+        <button type="submit">Create</button>
+        <div class="error" id="createError"></div>
+      </form>
+    </div>
+    <hr>
+    <h3>All Posts</h3>
+    <div id="posts"></div>
+    <hr>
+    <div id="stats"></div>
+  </div>
+  <script>
+    // Load posts
+    function loadPosts() {
+      fetch('/api/posts')
+        .then(res => res.json())
+        .then(data => {
+          const postsDiv = document.getElementById('posts');
+          postsDiv.innerHTML = '';
+          data.posts.forEach(post => {
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.innerHTML = `
+              <b>Type:</b> ${post.type} <br>
+              <b>Created:</b> ${new Date(post.created_at).toLocaleString()}<br>
+              ${post.type === 'html' ? post.content : `<img src="${post.content}" style="max-width:200px;">`}<br>
+              <button onclick="editPost(${post.id}, '${post.type}', \`${post.content.replace(/`/g, '\\`')}\`)">Edit</button>
+              <button onclick="deletePost(${post.id})">Delete</button>
+              <div id="editDiv${post.id}"></div>
+              <hr>
+            `;
+            postsDiv.appendChild(div);
+          });
+        });
+    }
+    loadPosts();
+
+    // Create post
+    document.getElementById('createPostForm').onsubmit = function(e) {
+      e.preventDefault();
+      const form = e.target;
+      fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: form.type.value,
+          content: form.content.value
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.success) {
+          form.reset();
+          loadPosts();
+        } else {
+          document.getElementById('createError').innerText = data.error || 'Error';
+        }
+      });
+    };
+
+    // Edit post
+    function editPost(id, type, content) {
+      const editDiv = document.getElementById('editDiv' + id);
+      editDiv.innerHTML = `
+        <form onsubmit="submitEdit(event, ${id})">
+          <select name="type">
+            <option value="html" ${type === 'html' ? 'selected' : ''}>HTML</option>
+            <option value="image" ${type === 'image' ? 'selected' : ''}>Image URL</option>
+          </select>
+          <textarea name="content">${content}</textarea>
+          <button type="submit">Save</button>
+        </form>
+      `;
+    }
+    window.editPost = editPost;
+
+    function submitEdit(e, id) {
+      e.preventDefault();
+      const form = e.target;
+      fetch('/api/posts/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: form.type.value,
+          content: form.content.value
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.success) {
+          loadPosts();
+        }
+      });
+    }
+    window.submitEdit = submitEdit;
+
+    // Delete post
+    function deletePost(id) {
+      if (!confirm('Delete this post?')) return;
+      fetch('/api/posts/' + id, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) loadPosts();
+        });
+    }
+    window.deletePost = deletePost;
+
+    // Load stats
+    fetch('/api/auth/stats')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('stats').innerHTML = `<b>Total users:</b> ${data.totalUsers}`;
+        }
+      });
+  </script>
+</body>
+</html>

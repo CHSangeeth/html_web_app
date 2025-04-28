@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+  }
+  
+  .container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  input, textarea, select, button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+  }
+  
+  button {
+    width: auto;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  
+  button:hover {
+    background: #388e3c;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  .post {
+    margin-bottom: 20px;
+  }
+  
+  .summary {
+    background: #e0ffe0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #b2ffb2;
+  }
+  
+  .trade-card {
+    width: 320px;
+    margin: 30px auto;
+    padding: 24px 20px 20px 20px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #e0ffe7 0%, #f9f9f9 100%);
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.15), 0 1.5px 6px rgba(33, 150, 243, 0.08);
+    transition: box-shadow 0.2s;
+  }
+  
+  .trade-card:hover {
+    box-shadow: 0 12px 40px rgba(76, 175, 80, 0.22), 0 2px 8px rgba(33, 150, 243, 0.12);
+  }
+  
+  .trade-pair {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    color: #222;
+  }
+  
+  .trade-action {
+    color: #fff;
+    background: #4CAF50;
+    display: inline-block;
+    padding: 5px 18px;
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 14px;
+    margin-top: 6px;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.09);
+  }
+  
+  .target-price, .trade-profit {
+    margin-top: 10px;
+    font-size: 17px;
+    color: #333;
+  }
+  
+  .target-hit {
+    margin-top: 14px;
+    font-size: 19px;
+    color: #2196F3;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard | Forex App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Forex Signals</h2>
+    <a href="/api/auth/logout">Logout</a>
+    <div class="summary">
+      <h3>Profit/Loss Summary</h3>
+      <p>Profit: <b>$1,200</b></p>
+      <p>Loss: <b>$300</b></p>
+    </div>
+    <div id="posts"></div>
+  </div>
+  <script>
+    fetch('/api/posts/public')
+      .then(res => res.json())
+      .then(data => {
+        const postsDiv = document.getElementById('posts');
+        if (data.posts.length === 0) {
+          postsDiv.innerHTML = '<p>No posts yet.</p>';
+        } else {
+          data.posts.forEach(post => {
+            if (post.type === 'html') {
+              const div = document.createElement('div');
+              div.className = 'post';
+              div.innerHTML = post.content;
+              postsDiv.appendChild(div);
+            } else if (post.type === 'image') {
+              const div = document.createElement('div');
+              div.className = 'post';
+              div.innerHTML = `<img src="${post.content}" alt="Image Post" style="max-width:300px;">`;
+              postsDiv.appendChild(div);
+            }
+          });
+        }
+      });
+  </script>
+</body>
+</html>
