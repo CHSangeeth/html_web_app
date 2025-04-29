@@ -699,15 +699,24 @@ footer {
   }
 }
 
+/* Mobile viewport styles - FIXED to show logout button */
 @media (max-width: 576px) {
-  .nav-links {
-    display: none;
-  }
-  
   .navbar {
-    justify-content: center;
+    padding: 0.75rem 1rem;
   }
   
+  /* Keep nav-links visible */
+  .nav-links {
+    display: flex;
+  }
+  
+  /* Make logout button smaller on mobile */
+  .logout-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Adjust other responsive elements */
   .main-content {
     padding: 1rem;
   }
